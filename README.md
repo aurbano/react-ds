@@ -10,6 +10,11 @@
 
 [![react-ds gif](https://thumbs.gfycat.com/FatYellowKid-size_restricted.gif)](https://gfycat.com/gifs/detail/fatyellowkid)
 
+I wrote this library because I couldn't find any existing one to do selections without having to wrap the items in their component.
+
+In some cases you really need an unobtrusive way to make items selectable, this will do just that.
+
+
 ## Installation
 
 ```console
