@@ -22,7 +22,8 @@ $ yarn add react-ds
 
 ## Usage
 
-```js
+```jsx
+import React from 'react';
 import Selection from 'react-ds'
 
 class MyComponent extends React.PureComponent {
@@ -82,3 +83,15 @@ class MyComponent extends React.PureComponent {
   }
 }
 ```
+
+## Contributing
+
+Only edit the files in the `src` folder. I'll update `dist` manually before publishing new versions to npm.
+
+To run the tests simply run `npm test`. Add tests as you see fit to the `test` folder, they must be called `{string}.test.js`.
+
+## License
+
+Licensed under the MIT license.
+
+&copy; Copyright Alejandro U. Alvarez
