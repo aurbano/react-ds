@@ -1,8 +1,14 @@
 # Change Log
 
-## [v1.0.2](https://github.com/aurbano/react-ds/tree/v1.0.2)
+## [v1.0.3](https://github.com/aurbano/react-ds/tree/v1.0.3) (2017-07-12)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.0.2...v1.0.3)
 
-[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.0.2...HEAD)
+**Implemented enhancements:**
+
+- Setup CI [\#3](https://github.com/aurbano/react-ds/issues/3)
+
+## [v1.0.2](https://github.com/aurbano/react-ds/tree/v1.0.2) (2017-07-12)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.0.1...v1.0.2)
 
 **Implemented enhancements:**
 
