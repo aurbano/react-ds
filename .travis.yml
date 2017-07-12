@@ -1,6 +1,12 @@
 sudo: false
 language: node_js
 node_js:
-  - '6'
+- '6'
 script:
-  - 'npm run test:ci'
+- npm test
+after_success:
+- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+- cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage
+env:
+  global:
+    secure: o+QC0UCfqDo+Py3i6Wa0eOMGfPgqrXXMCrINxzvS8WNe5Lh9bIGbFfE4BctPu6YJfFFv8h1krHlA+oHFaFLzsWUqe70pEKu9+hFWWpR4WMdlRW5oHMjwmO3M5cKzcPYsvJ9YzjoEEU9wsLx/pt3i+8VRl0E+0F2B4Zo3PfcGny3WYhEO3r/B8shU81EE1sajhhesPj5dGWHRTfQhcQlyvtBlWqy+Atp+RFGDyB7N0KJhIjw15vLvPqCI0UsaWrpCIC8c3uV3um92ChKTaxbxBJS7cdG9wIMoardBY1UxxMahn9ohgO5/6obr9h6FTpfotblGpFQ6qKVySd2wic8eODPbplP+pq0TaMhw37GuE+ZEL3Yg7pwfeav2nKf8xwvGA5yxZLq8WKnTZZdOUMRT9DX3MFTKNkUusINv0ehWoVZSRsFqFrsXF0C9cx9/HjEpG33j3I2bH9fo0CPcgfwM9frGHcTfqirq86bwESIYfGXX7+e6qkV9yozEtpDDueaQK0hHWrEAMsNQgYX63r8lGF1oYCdeQ14I2xQjs0Yufi8TTcpDPy3977A68HkASj0mNLH24u4fK6zQYkDLCc7Q4BXIO1lVKeDjw7/obvjQ/+QM0BT1F757OWak5YjhAy9SAttZnsCYcBa9VVIlEQYrrHKzwR3RQDGhmE2g85dzWOc=
