@@ -23,6 +23,45 @@ $ yarn add react-ds
 ## Usage
 
 ```jsx
+<Selection
+    target={ ref}
+    elements={ refs[] }
+    offset={ 0 }
+    onSelectionChange={ this.handleSelection }
+/>
+```
+
+### Props
+
+Docs on each prop, see them in action in the example below.
+
+#### `target`
+
+Element where the selection should be applied to. This is to scope the mouse/touch event handlers and make sure that it doesn't affect your whole web app.
+
+It must be a React `ref`, it should also exist, so you may want to check if it's already initialized before rendering the `Selection` component.
+
+#### `elements`
+
+Array of refs to the elements that are selectable. The `Selection` component will use this to get their location and sizes to determine whether they are within the selection area.
+
+The should exist before rendering the `Selection` component.
+
+#### `offset`
+
+If the `target` element is rendered with a different parent than the `Selection` component, or it has an offset, then you can specify it here so that the `Selection` area is rendered in the right place.
+
+Typically passing the result of `target.getBoundingClientRect()` does the trick.
+
+#### `onSelectionChange`
+
+Function that will be executed when the selection changes. An array of element indexes will be passed (with the same indexes as the `elements` prop).
+
+This is where you probably want to update your state, to highlight them as selected for example.
+
+## Example
+
+```jsx
 import React from 'react';
 import Selection from 'react-ds'
 
@@ -54,6 +93,20 @@ class MyComponent extends React.PureComponent {
     return {};
   };
   
+  renderSelection() {
+    if (!this.ref || !this.elRefs) {
+      return null;
+    }
+    return (
+      <Selection
+        target={ this.ref}
+        elements={ this.elRefs }
+        offset={ 0 }
+        onSelectionChange={ this.handleSelection }
+      />
+    );
+  }
+  
   render() {
     const selectableElements = [
       'one',
@@ -72,12 +125,7 @@ class MyComponent extends React.PureComponent {
             { el }
           </div>
         )) }
-        <Selection
-            target={ this.ref}
-            elements={ this.elRefs }
-            offset={ 0 }
-            onSelectionChange={ this.handleSelection }
-        />
+        { this.renderSelection() }
       </div>
     );
   }
