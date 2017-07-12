@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/aurbano/react-ds/badge.svg?branch=master)](https://coveralls.io/github/aurbano/react-ds?branch=master)
 [![npm](https://img.shields.io/npm/dm/react-ds.svg)](https://www.npmjs.com/package/react-ds)
 [![npm](https://img.shields.io/npm/l/react-ds.svg)](https://www.npmjs.com/package/react-ds)
-[![Codacy grade](https://img.shields.io/codacy/grade/62cc5c03fbd648f983ef2df8398d2c98.svg)](https://www.codacy.com/app/aurbano/react-ds)
+[![Codacy grade](https://img.shields.io/codacy/grade/e2589a609bdc4c56bd49c232a65dab4e.svg)](https://www.codacy.com/app/aurbano/react-ds)
 
 [video here]
 
