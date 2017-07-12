@@ -26,6 +26,7 @@ const initialState = {
   endPoint: null,
   selectionBox: null,
   appendMode: false,
+  offset: defaultProps.offset,
 };
 
 describe('<Selection />', () => {
