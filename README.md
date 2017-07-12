@@ -8,9 +8,7 @@
 [![npm](https://img.shields.io/npm/l/react-ds.svg)](https://www.npmjs.com/package/react-ds)
 [![Codacy grade](https://img.shields.io/codacy/grade/e2589a609bdc4c56bd49c232a65dab4e.svg)](https://www.codacy.com/app/aurbano/react-ds)
 
-<div style="text-align:center">
-    [![react-ds gif](https://thumbs.gfycat.com/FatYellowKid-size_restricted.gif)](https://gfycat.com/gifs/detail/fatyellowkid)
-</div>
+[![react-ds gif](https://thumbs.gfycat.com/FatYellowKid-size_restricted.gif)](https://gfycat.com/gifs/detail/fatyellowkid)
 
 ## Installation
 
