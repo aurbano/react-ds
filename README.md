@@ -8,7 +8,7 @@
 [![npm](https://img.shields.io/npm/l/react-ds.svg)](https://www.npmjs.com/package/react-ds)
 [![Codacy grade](https://img.shields.io/codacy/grade/e2589a609bdc4c56bd49c232a65dab4e.svg)](https://www.codacy.com/app/aurbano/react-ds)
 
-[video here]
+[![react-ds gif](https://raw.githubusercontent.com/aurbano/react-ds/master/examples/react-ds.gif)]
 
 ## Installation
 
