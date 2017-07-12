@@ -31,7 +31,6 @@ $ yarn add react-ds
 <Selection
     target={ ref}
     elements={ refs[] }
-    offset={ 0 }
     onSelectionChange={ this.handleSelection }
 />
 ```
@@ -52,17 +51,43 @@ Array of refs to the elements that are selectable. The `Selection` component wil
 
 The should exist before rendering the `Selection` component.
 
-#### `offset`
-
-If the `target` element is rendered with a different parent than the `Selection` component, or it has an offset, then you can specify it here so that the `Selection` area is rendered in the right place.
-
-Typically passing the result of `target.getBoundingClientRect()` does the trick.
-
 #### `onSelectionChange`
 
 Function that will be executed when the selection changes. An array of element indexes will be passed (with the same indexes as the `elements` prop).
 
 This is where you probably want to update your state, to highlight them as selected for example.
+
+#### `offset` *(Optional)*
+
+This is used to calculate the coordinates of the mouse when drawing the Selection box, since the mouse events gives coordinates relative to the document, but the Selection box may have a different parent.
+
+Essentially you need to pass the offset of the parent element where the Selection is being rendered. If it's rendered in the same component as the items to be selected then the default value will work fine.
+
+If passing your own offset keep in mind that `getBoundingClientRect()` depends on the scroll, so you may want to do something like this:
+
+```js
+const boundingBox = props.target.getBoundingClientRect();
+const offset = {
+  top: boundingBox.top + window.scrollY,
+  left: boundingBox.left + window.scrollX,
+};
+```
+
+#### `style` *(Optional)*
+
+If you want to override the styles for the selection area, you can either pass any styles here, or use css and declare any styles on the `.react-ds-border` class.
+
+The default styles are:
+
+```js
+const style = {
+  position: 'absolute',
+  background: 'rgba(159, 217, 255, 0.3)',
+  border: 'solid 1px rgba(123, 123, 123, 0.61)',
+  zIndex: 9,
+  cursor: 'crosshair',
+}
+```
 
 ## Example
 
