@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+ <testsuite name="&lt;Selection /&gt;" timestamp="2017-07-12T11:38:17" hostname="localhost" time="0.047" errors="0" tests="6" skipped="0" disabled="0" failures="0">
+  <testcase classname="&lt;Selection /&gt;" name="Should not render when not selecting" time="0.009" />
+  <testcase classname="&lt;Selection /&gt;" name="onMouseDown: Should start tracking" time="0.007" />
+  <testcase classname="&lt;Selection /&gt;" name="onMouseUp: Should stop tracking" time="0.001" />
+  <testcase classname="&lt;Selection /&gt;" name="onMouseMove: Should update selection box" time="0.021" />
+  <testcase classname="&lt;Selection /&gt;" name="boxIntersects: Calculates box intersections" time="0.002" />
+  <testcase classname="&lt;Selection /&gt;" name="updateCollidingChildren: Updates colliding children" time="0.006" />
+ </testsuite>
+</testsuites>

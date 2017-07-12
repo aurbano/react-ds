@@ -4,7 +4,16 @@
   "description": "Simple React Drag-to-Select component",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "lint": "npm run lint:js",
+    "lint:eslint": "eslint",
+    "lint:js": "npm run lint:eslint -- . ",
+    "lint:fix": "npm run lint:eslint -- --fix . ",
+    "lint:staged": "lint-staged && npm run flow",
+    "pretest": "npm run test:clean && npm run lint && npm run flow",
+    "test:clean": "rimraf ./coverage",
+    "test": "cross-env NODE_ENV=test jest --coverage",
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
+    "flow": "flow status"
   },
   "repository": {
     "type": "git",
@@ -30,7 +39,72 @@
     "react": "^15.6.1"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-dynamic-import-node": "^1.0.2",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "cross-env": "^5.0.1",
     "enzyme": "^2.9.1",
-    "lodash": "^4.17.4"
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.2",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.1.0",
+    "jasmine": "^2.6.0",
+    "jasmine-reporters": "^2.2.1",
+    "jest": "^20.0.4",
+    "jest-cli": "^20.0.4",
+    "lint-staged": "^4.0.1",
+    "lodash": "^4.17.4",
+    "pre-commit": "^1.2.2",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1",
+    "rimraf": "^2.6.1",
+    "sinon": "^2.3.7"
+  },
+  "lint-staged": {
+    "*.js": "lint:eslint"
+  },
+  "pre-commit": "lint:staged",
+  "babel": {
+    "presets": [
+      [
+        "latest",
+        {
+          "es2015": {
+            "modules": false
+          }
+        }
+      ],
+      "react",
+      "stage-0"
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          "transform-es2015-modules-commonjs",
+          "dynamic-import-node"
+        ]
+      }
+    }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "unmockedModulePathPatterns": [
+      "./node_modules/react",
+      "./node_modules/react-addons-test-utils",
+      "./node_modules/jasmine-reporters"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/test/util/test-bundler.js",
+    "testRegex": ".*\\.test\\.js$"
   }
 }

@@ -1,0 +1,21 @@
+[ignore]
+.*/node_modules/babel-plugin-transform-react-remove-prop-types/.*
+.*/node_modules/babel-plugin-flow-runtime/.*
+.*/node_modules/eslint-plugin-jsx-a11y/.*
+.*/node_modules/flow-runtime/.*
+
+[include]
+
+[libs]
+
+[options]
+# Replicate WebPack's resolution directories
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src
+
+# Support ES7 classes
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+
+# Support @decorators
+esproposal.decorators=ignore
