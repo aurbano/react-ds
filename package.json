@@ -1,0 +1,36 @@
+{
+  "name": "react-ds",
+  "version": "1.0.0",
+  "description": "Simple React Drag-to-Select component",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aurbano/react-ds.git"
+  },
+  "keywords": [
+    "react",
+    "select",
+    "drag",
+    "component",
+    "library",
+    "items",
+    "selection"
+  ],
+  "author": "Alejandro U. Alvarez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aurbano/react-ds/issues"
+  },
+  "homepage": "https://github.com/aurbano/react-ds#readme",
+  "dependencies": {
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1"
+  },
+  "devDependencies": {
+    "enzyme": "^2.9.1",
+    "lodash": "^4.17.4"
+  }
+}
