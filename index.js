@@ -1,3 +1,0 @@
-/**
- * react-ds entry point
- */
