@@ -16,6 +16,7 @@
     "pretest": "npm run test:clean && npm run lint && npm run flow",
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
+    "test:ci": "cross-env NODE_ENV=test jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "flow": "flow status",
     "changelog": "github_changelog_generator -u aurbano -p react-ds"
@@ -54,6 +55,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "coveralls": "^2.13.1",
     "cross-env": "^5.0.1",
     "enzyme": "^2.9.1",
     "eslint": "^3.19.0",
