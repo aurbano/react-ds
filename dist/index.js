@@ -161,8 +161,8 @@ var Selection = function (_React$PureComponent) {
           if (ref) {
             var refBox = ref.getBoundingClientRect();
             var tmpBox = {
-              top: refBox.top - _this.state.offset.top,
-              left: refBox.left - _this.state.offset.left,
+              top: refBox.top - _this.state.offset.top + window.scrollY,
+              left: refBox.left - _this.state.offset.left + window.scrollX,
               width: ref.clientWidth,
               height: ref.clientHeight
             };
@@ -210,17 +210,17 @@ var Selection = function (_React$PureComponent) {
 
 
   _createClass(Selection, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.reset();
+      this.bind();
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState({
         offset: getOffset(nextProps)
       });
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.reset();
-      this.bind();
     }
   }, {
     key: 'componentDidUpdate',
@@ -316,6 +316,7 @@ Selection.propTypes = {
   disabled: PropTypes.bool,
   onSelectionChange: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   offset: PropTypes.object,
   style: PropTypes.object
 };

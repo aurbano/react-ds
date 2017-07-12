@@ -262,8 +262,8 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
         if (ref) {
           const refBox = ref.getBoundingClientRect();
           const tmpBox = {
-            top: refBox.top - this.state.offset.top,
-            left: refBox.left - this.state.offset.left,
+            top: (refBox.top - this.state.offset.top) + window.scrollY,
+            left: (refBox.left - this.state.offset.left) + window.scrollX,
             width: ref.clientWidth,
             height: ref.clientHeight,
           };
