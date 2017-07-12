@@ -61,66 +61,85 @@ This is where you probably want to update your state, to highlight them as selec
 
 ## Example
 
+This example was taken from [`example/app/src/Example.js`](https://github.com/aurbano/react-ds/blob/master/example/app/src/Example.js) which you can see running at https://aurbano.eu/react-ds/
+
 ```jsx
 import React from 'react';
-import Selection from 'react-ds'
+import PropTypes from 'prop-types';
+import Selection from 'react-ds';
 
-class Example extends React.PureComponent {
-  
+export default class Example extends React.PureComponent {
+
   constructor() {
     super();
-    
-    // Store a ref to each selectable element
-    this.elRefs = [];
-    
+
     this.state = {
+      ref: null,
+      elRefs: [],
       selectedElements: [], // track the elements that are selected
     };
   }
-  
+
   handleSelection = (indexes) => {
     this.setState({
       selectedElements: indexes,
     });
   };
-  
+
   getStyle = (index) => {
     if (this.state.selectedElements.indexOf(index) > -1) {
+      // Selected state
       return {
-        background: 'blue',
+        background: '#2185d0',
+        borderColor: '#2185d0',
+        color: 'white',
       };
     }
     return {};
   };
-  
+
+  addElementRef = (ref) => {
+    const elRefs = this.state.elRefs;
+    elRefs.push(ref);
+    this.setState({
+      elRefs,
+    });
+  };
+
   renderSelection() {
-    if (!this.ref || !this.elRefs) {
+    if (!this.state.ref || !this.state.elRefs) {
       return null;
     }
     return (
       <Selection
-        target={ this.ref}
-        elements={ this.elRefs }
-        offset={ 0 }
+        target={ this.state.ref}
+        elements={ this.state.elRefs }
+        offset={ this.state.ref.getBoundingClientRect() }
         onSelectionChange={ this.handleSelection }
+        style={ this.props.style }
       />
     );
   }
-  
+
   render() {
     const selectableElements = [
       'one',
       'another',
       'hey there',
+      'item',
+      'two',
+      'three',
+      'something longer?',
       'last'
     ];
     return (
-      <div ref={ (ref) => { this.ref = ref; } }>
+      <div ref={ (ref) => { this.setState({ ref }); } } className='item-container'>
         { selectableElements.map((el, index) => (
           <div
             key={ el }
-            ref={ (ref) => { this.elRefs.push(ref); } }
+            ref={ this.addElementRef }
             style={ this.getStyle(index) }
+            className='item'
           >
             { el }
           </div>
@@ -130,6 +149,10 @@ class Example extends React.PureComponent {
     );
   }
 }
+
+Example.PropTypes = {
+  style: PropTypes.object,
+};
 ```
 
 ## Contributing
