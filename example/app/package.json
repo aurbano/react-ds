@@ -14,7 +14,8 @@
     "start": "npm run build:less && react-scripts start",
     "build": "npm run build:less && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "linklocal"
   },
   "devDependencies": {
     "less": "^2.7.2"
