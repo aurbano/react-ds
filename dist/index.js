@@ -11,6 +11,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React from 'react';
 import PropTypes from 'prop-types';
 
+function getOffset(props) {
+  var offset = {
+    top: 0,
+    left: 0
+  };
+  if (props.offset) {
+    offset = props.offset;
+  } else if (props.target) {
+    var boundingBox = props.target.getBoundingClientRect();
+    offset.top = boundingBox.top + window.scrollY;
+    offset.left = boundingBox.left + window.scrollX;
+  }
+  return offset;
+}
+
 var Selection = function (_React$PureComponent) {
   _inherits(Selection, _React$PureComponent);
 
@@ -42,8 +57,8 @@ var Selection = function (_React$PureComponent) {
 
       nextState.mouseDown = true;
       nextState.startPoint = {
-        x: e.pageX - _this.props.offset.left,
-        y: e.pageY - _this.props.offset.top
+        x: e.pageX - _this.state.offset.left,
+        y: e.pageY - _this.state.offset.top
       };
 
       _this.setState(nextState);
@@ -63,8 +78,8 @@ var Selection = function (_React$PureComponent) {
       }
       nextState.mouseDown = true;
       nextState.startPoint = {
-        x: e.touches[0].pageX - _this.props.offset.left,
-        y: e.touches[0].pageY - _this.props.offset.top
+        x: e.touches[0].pageX - _this.state.offset.left,
+        y: e.touches[0].pageY - _this.state.offset.top
       };
 
       _this.setState(nextState);
@@ -94,8 +109,8 @@ var Selection = function (_React$PureComponent) {
       e.preventDefault();
       if (_this.state.mouseDown) {
         var _endPoint = {
-          x: e.pageX - _this.props.offset.left,
-          y: e.pageY - _this.props.offset.top
+          x: e.pageX - _this.state.offset.left,
+          y: e.pageY - _this.state.offset.top
         };
 
         _this.setState({
@@ -109,8 +124,8 @@ var Selection = function (_React$PureComponent) {
       e.preventDefault();
       if (_this.state.mouseDown) {
         var _endPoint2 = {
-          x: e.touches[0].pageX - _this.props.offset.left,
-          y: e.touches[0].pageY - _this.props.offset.top
+          x: e.touches[0].pageX - _this.state.offset.left,
+          y: e.touches[0].pageY - _this.state.offset.top
         };
 
         _this.setState({
@@ -146,8 +161,8 @@ var Selection = function (_React$PureComponent) {
           if (ref) {
             var refBox = ref.getBoundingClientRect();
             var tmpBox = {
-              top: refBox.top - _this.props.offset.top,
-              left: refBox.left - _this.props.offset.left,
+              top: refBox.top - _this.state.offset.top,
+              left: refBox.left - _this.state.offset.left,
               width: ref.clientWidth,
               height: ref.clientHeight
             };
@@ -185,7 +200,8 @@ var Selection = function (_React$PureComponent) {
       startPoint: null,
       endPoint: null,
       selectionBox: null,
-      appendMode: false
+      appendMode: false,
+      offset: getOffset(props)
     };
 
     _this.selectedChildren = [];
@@ -194,6 +210,13 @@ var Selection = function (_React$PureComponent) {
 
 
   _createClass(Selection, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        offset: getOffset(nextProps)
+      });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.reset();
@@ -293,6 +316,6 @@ Selection.propTypes = {
   disabled: PropTypes.bool,
   onSelectionChange: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  offset: PropTypes.object.isRequired,
+  offset: PropTypes.object,
   style: PropTypes.object
 };

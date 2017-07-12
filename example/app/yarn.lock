@@ -2522,6 +2522,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flow-bin@^0.49.1:
+  version "0.49.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.49.1.tgz#c9e456b3173a7535a4ffaf28956352c63bb8e3e9"
+
 for-in@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -4934,9 +4938,8 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-ds@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-ds/-/react-ds-1.1.0.tgz#03e3303c378a4f696651824a3884c7fd14c92b70"
+"react-ds@file:../../":
+  version "1.2.0"
   dependencies:
     prop-types "^15.5.10"
     react "^15.6.1"

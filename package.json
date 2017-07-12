@@ -7,10 +7,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run build:clean && npm run build:dist && npm run build:flow",
+    "build": "npm run build:clean && npm run build:dist && npm run build:flow && npm run build:minify",
     "build:clean": "rimraf dist",
     "build:dist": "babel -d dist src --ignore '**/__tests__/**'",
     "build:flow": "flow-copy-source -v -i '**/__tests__/**' src dist",
+    "build:minify": "./node_modules/.bin/uglifyjs dist/index.js -o dist/index.min.js",
     "lint": "npm run lint:js",
     "lint:eslint": "eslint",
     "lint:js": "npm run lint:eslint -- . ",
@@ -22,6 +23,7 @@
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "flow": "flow status",
     "changelog": "github_changelog_generator -u aurbano -p react-ds",
+    "start": "cd example/app && npm start",
     "deploy": "cd example/app && npm run build && gh-pages -d build"
   },
   "repository": {

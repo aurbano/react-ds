@@ -6,7 +6,7 @@
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-ds": "^1.1.0",
+    "react-ds": "file:../../",
     "react-scripts": "1.0.10"
   },
   "scripts": {

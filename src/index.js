@@ -20,8 +20,10 @@ type Props = {
   target: HTMLElement,
   onSelectionChange(elements: Array<any>): void,
   elements: Array<HTMLElement>,
-  offset: {
+  offset?: {
+    // eslint-disable-next-line react/no-unused-prop-types
     top: number,
+    // eslint-disable-next-line react/no-unused-prop-types
     left: number,
   },
   style: ?any,
@@ -33,7 +35,26 @@ type State = {
   endPoint: ?Point,
   selectionBox: ?Box,
   appendMode: boolean,
+  offset: {
+    top: number,
+    left: number,
+  },
 };
+
+function getOffset(props: Props) {
+  let offset = {
+    top: 0,
+    left: 0,
+  };
+  if (props.offset) {
+    offset = props.offset;
+  } else if (props.target) {
+    const boundingBox = props.target.getBoundingClientRect();
+    offset.top = boundingBox.top + window.scrollY;
+    offset.left = boundingBox.left + window.scrollX;
+  }
+  return offset;
+}
 
 export default class Selection extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   props: Props;
@@ -49,6 +70,7 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       endPoint: null,
       selectionBox: null,
       appendMode: false,
+      offset: getOffset(props),
     };
 
     this.selectedChildren = [];
@@ -57,6 +79,12 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
   componentDidMount() {
     this.reset();
     this.bind();
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState({
+      offset: getOffset(nextProps),
+    });
   }
 
   componentDidUpdate() {
@@ -100,8 +128,8 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
 
     nextState.mouseDown = true;
     nextState.startPoint = {
-      x: e.pageX - this.props.offset.left,
-      y: e.pageY - this.props.offset.top,
+      x: e.pageX - this.state.offset.left,
+      y: e.pageY - this.state.offset.top,
     };
 
     this.setState(nextState);
@@ -121,8 +149,8 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
     }
     nextState.mouseDown = true;
     nextState.startPoint = {
-      x: e.touches[0].pageX - this.props.offset.left,
-      y: e.touches[0].pageY - this.props.offset.top,
+      x: e.touches[0].pageX - this.state.offset.left,
+      y: e.touches[0].pageY - this.state.offset.top,
     };
 
     this.setState(nextState);
@@ -160,8 +188,8 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
     e.preventDefault();
     if (this.state.mouseDown) {
       const endPoint: Point = {
-        x: e.pageX - this.props.offset.left,
-        y: e.pageY - this.props.offset.top,
+        x: e.pageX - this.state.offset.left,
+        y: e.pageY - this.state.offset.top,
       };
 
       this.setState({
@@ -178,8 +206,8 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
     e.preventDefault();
     if (this.state.mouseDown) {
       const endPoint: Point = {
-        x: e.touches[0].pageX - this.props.offset.left,
-        y: e.touches[0].pageY - this.props.offset.top,
+        x: e.touches[0].pageX - this.state.offset.left,
+        y: e.touches[0].pageY - this.state.offset.top,
       };
 
       this.setState({
@@ -234,8 +262,8 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
         if (ref) {
           const refBox = ref.getBoundingClientRect();
           const tmpBox = {
-            top: refBox.top - this.props.offset.top,
-            left: refBox.left - this.props.offset.left,
+            top: refBox.top - this.state.offset.top,
+            left: refBox.left - this.state.offset.left,
             width: ref.clientWidth,
             height: ref.clientHeight,
           };
@@ -299,6 +327,7 @@ Selection.propTypes = {
   disabled: PropTypes.bool,
   onSelectionChange: PropTypes.func.isRequired,
   elements: PropTypes.array.isRequired,
-  offset: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
+  offset: PropTypes.object,
   style: PropTypes.object,
 };

@@ -48,7 +48,6 @@ export default class Example extends React.PureComponent {
       <Selection
         target={ this.state.ref}
         elements={ this.state.elRefs }
-        offset={ this.state.ref.getBoundingClientRect() }
         onSelectionChange={ this.handleSelection }
         style={ this.props.style }
       />
