@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.4.0](https://github.com/aurbano/react-ds/tree/v1.4.0) (2017-07-12)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.2.0...v1.4.0)
+
+**Fixed bugs:**
+
+- Items not properly selected when scrolled [\#4](https://github.com/aurbano/react-ds/issues/4)
+
 ## [v1.2.0](https://github.com/aurbano/react-ds/tree/v1.2.0) (2017-07-12)
 [Full Changelog](https://github.com/aurbano/react-ds/compare/v1.1.0...v1.2.0)
 
