@@ -1,0 +1,22 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://aurbano.eu/react-ds/",
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-ds": "^1.1.0",
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "build:less": "./node_modules/.bin/lessc src/example.less src/example.css",
+    "start": "npm run build:less && react-scripts start",
+    "build": "npm run build:less && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "less": "^2.7.2"
+  }
+}

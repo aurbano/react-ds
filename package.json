@@ -21,7 +21,8 @@
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "flow": "flow status",
-    "changelog": "github_changelog_generator -u aurbano -p react-ds"
+    "changelog": "github_changelog_generator -u aurbano -p react-ds",
+    "deploy": "cd example/app && npm run build && gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -70,6 +71,8 @@
     "flow-bin": "^0.49.1",
     "flow-copy-source": "^1.2.0",
     "flow-runtime": "^0.13.0",
+    "gh-pages": "^1.0.0",
+    "gulp": "^3.9.1",
     "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
     "jest": "^20.0.4",
@@ -77,6 +80,7 @@
     "lint-staged": "^4.0.1",
     "lodash": "^4.17.4",
     "pre-commit": "^1.2.2",
+    "react-component-gulp-tasks": "^0.7.7",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
     "rimraf": "^2.6.1",
