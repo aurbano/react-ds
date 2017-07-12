@@ -13,9 +13,11 @@
 ## Installation
 
 ```console
-npm i react-ds
-// or
-yarn add react-ds
+$ npm i react-ds
+```
+Or if you prefer yarn
+```console
+$ yarn add react-ds
 ```
 
 ## Usage
