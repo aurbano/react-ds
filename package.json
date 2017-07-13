@@ -46,8 +46,8 @@
   },
   "homepage": "https://github.com/aurbano/react-ds#readme",
   "peerDependencies": {
-    "react": "^^15.0.0-rc || ^15.0",
-    "prop-types": "^15.0"
+    "prop-types": "^15.0",
+    "react": "^^15.0.0-rc || ^15.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -82,6 +82,8 @@
     "lint-staged": "^4.0.1",
     "lodash": "^4.17.4",
     "pre-commit": "^1.2.2",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
     "react-component-gulp-tasks": "^0.7.7",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
