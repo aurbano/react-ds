@@ -45,6 +45,20 @@ h6,
   margin-bottom: .66em;
   margin-top: 0;
 }
+h1 .right,
+h2 .right,
+h3 .right,
+h4 .right,
+h5 .right,
+h6 .right,
+.h1 .right,
+.h2 .right,
+.h3 .right,
+.h4 .right,
+.h5 .right,
+.h6 .right {
+  font-size: 0.6em;
+}
 h1,
 .h1 {
   font-size: 3em;
@@ -98,6 +112,11 @@ h6,
   border-bottom-color: white;
   outline: none;
   text-decoration: none;
+}
+.right {
+  float: right;
+  position: relative;
+  bottom: -0.2em;
 }
 .page-subheader {
   background-color: #e6f2ff;

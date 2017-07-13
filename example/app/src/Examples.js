@@ -6,7 +6,12 @@ export default class Examples extends React.PureComponent {
   render() {
     return (
       <div>
-        <h2>Example</h2>
+        <h2>
+          <a href="https://github.com/aurbano/react-ds/blob/master/example/app/src/Example.js" className="right">
+            <code>&lt;Source&gt;</code>
+          </a>
+          Example
+        </h2>
 
         <p>The box below is the <code>target</code> for the Selection component. You'll see that you can't initiate selections outside of it.</p>
 
