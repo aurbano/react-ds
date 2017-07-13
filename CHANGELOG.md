@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.4.1](https://github.com/aurbano/react-ds/tree/v1.4.0)
+
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.4.0...v1.4.0)
+
+**Closed issues:**
+
+- Move react to peerDependencies [\#5](https://github.com/aurbano/react-ds/issues/5)
+
 ## [v1.4.0](https://github.com/aurbano/react-ds/tree/v1.4.0) (2017-07-12)
 [Full Changelog](https://github.com/aurbano/react-ds/compare/v1.2.0...v1.4.0)
 
