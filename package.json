@@ -7,6 +7,7 @@
     "dist"
   ],
   "scripts": {
+    "install:example": "cd example/app && npm install",
     "build": "npm run build:clean && cross-env NODE_ENV=production npm run build:dist && npm run build:flow && npm run build:minify",
     "build:clean": "rimraf dist",
     "build:dist": "babel -d dist src --ignore '**/__tests__/**'",
@@ -88,7 +89,6 @@
     "pre-commit": "^1.2.2",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
-    "react-component-gulp-tasks": "^0.7.7",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
     "rimraf": "^2.6.1",
