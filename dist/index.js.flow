@@ -27,6 +27,7 @@ type Props = {
     left: number,
   },
   style: ?any,
+  zoom?: number,
 };
 
 type State = {
@@ -125,11 +126,13 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
     if (e.ctrlKey || e.altKey || e.shiftKey) {
       nextState.appendMode = true;
     }
+    
+    const zoom = this.props.zoom || 1;
 
     nextState.mouseDown = true;
     nextState.startPoint = {
-      x: e.pageX - this.state.offset.left,
-      y: e.pageY - this.state.offset.top,
+      x: (e.pageX * zoom) - this.state.offset.left,
+      y: (e.pageY * zoom) - this.state.offset.top,
     };
 
     this.setState(nextState);
@@ -329,5 +332,6 @@ Selection.propTypes = {
   elements: PropTypes.array.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   offset: PropTypes.object,
+  zoom: PropTypes.number,
   style: PropTypes.object,
 };

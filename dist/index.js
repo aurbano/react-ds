@@ -70,10 +70,12 @@ var Selection = function (_React$PureComponent) {
         nextState.appendMode = true;
       }
 
+      var zoom = _this.props.zoom || 1;
+
       nextState.mouseDown = true;
       nextState.startPoint = {
-        x: e.pageX - _this.state.offset.left,
-        y: e.pageY - _this.state.offset.top
+        x: e.pageX * zoom - _this.state.offset.left,
+        y: e.pageY * zoom - _this.state.offset.top
       };
 
       _this.setState(nextState);
