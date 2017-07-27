@@ -2,18 +2,18 @@
   "name": "react-ds",
   "version": "1.7.1",
   "description": "Simple React Drag-to-Select component",
-  "main": "dist/index.min.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "install:example": "cd example/app && npm install",
     "build": "npm run build:clean && cross-env NODE_ENV=production npm run build:dist && npm run build:flow && npm run build:minify",
-    "build:dev": "npm run build:clean && cross-env NODE_ENV=production npm run build:dist && npm run build:flow && mv dist/index.js dist/index.min.js",
+    "build:dev": "npm run build:clean && cross-env NODE_ENV=production npm run build:dist && npm run build:flow",
     "build:clean": "rimraf dist",
     "build:dist": "babel -d dist src --ignore '**/__tests__/**'",
     "build:flow": "flow-copy-source -v -i '**/__tests__/**' src dist",
-    "build:minify": "./node_modules/.bin/uglifyjs dist/index.js -o dist/index.min.js",
+    "build:minify": "./node_modules/.bin/uglifyjs dist/index.js -o dist/index.js",
     "lint": "npm run lint:js",
     "lint:eslint": "eslint",
     "lint:js": "npm run lint:eslint -- . ",

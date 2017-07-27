@@ -26,7 +26,7 @@ type Props = {
     // eslint-disable-next-line react/no-unused-prop-types
     left: number,
   },
-  style: ?any,
+  style?: any,
   zoom?: number,
   ignoreTargets?: Array<string>,
 };
