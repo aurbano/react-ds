@@ -14,13 +14,13 @@ export default class Example extends React.PureComponent {
     };
   }
 
-  handleSelection = (indexes) => {
+  handleSelection = (indexes) => { // eslint-disable-line no-undef
     this.setState({
       selectedElements: indexes,
     });
   };
 
-  getStyle = (index) => {
+  getStyle = (index) => { // eslint-disable-line no-undef
     if (this.state.selectedElements.indexOf(index) > -1) {
       // Selected state
       return {
@@ -32,7 +32,7 @@ export default class Example extends React.PureComponent {
     return {};
   };
 
-  addElementRef = (ref) => {
+  addElementRef = (ref) => { // eslint-disable-line no-undef
     const elRefs = this.state.elRefs;
     elRefs.push(ref);
     this.setState({
