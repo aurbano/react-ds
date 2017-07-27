@@ -60,11 +60,7 @@ var Selection = function (_React$PureComponent) {
       }
     };
 
-    _this.onMouseDown = function (e) {
-      if (_this.props.disabled || e.button === 2 || e.nativeEvent && e.nativeEvent.which === 2) {
-        return;
-      }
-
+    _this.init = function (e, x, y) {
       if (_this.props.ignoreTargets) {
         var Target = e.target;
         if (!Target.matches) {
@@ -72,15 +68,14 @@ var Selection = function (_React$PureComponent) {
           Target.matches = Target.matchesSelector || Target.mozMatchesSelector || Target.msMatchesSelector || Target.oMatchesSelector || Target.webkitMatchesSelector || function (s) {
             var matches = (this.document || this.ownerDocument).querySelectorAll(s);
             var i = matches.length;
-            while (--i >= 0 && matches.item(i) !== this) {}
+            while (--i >= 0 && matches.item(i) !== this) {} // eslint-disable-line no-empty
             return i > -1;
           };
         }
         if (Target.matches && Target.matches(_this.props.ignoreTargets.join(','))) {
-          return;
+          return false;
         }
       }
-
       var nextState = {};
       if (e.ctrlKey || e.altKey || e.shiftKey) {
         nextState.appendMode = true;
@@ -90,14 +85,23 @@ var Selection = function (_React$PureComponent) {
 
       nextState.mouseDown = true;
       nextState.startPoint = {
-        x: e.pageX * zoom - _this.state.offset.left,
-        y: e.pageY * zoom - _this.state.offset.top
+        x: x * zoom - _this.state.offset.left,
+        y: y * zoom - _this.state.offset.top
       };
 
       _this.setState(nextState);
+      return true;
+    };
 
-      window.document.addEventListener('mousemove', _this.onMouseMove);
-      window.document.addEventListener('mouseup', _this.onMouseUp);
+    _this.onMouseDown = function (e) {
+      if (_this.props.disabled || e.button === 2 || e.nativeEvent && e.nativeEvent.which === 2) {
+        return;
+      }
+
+      if (_this.init(e, e.pageX, e.pageY)) {
+        window.document.addEventListener('mousemove', _this.onMouseMove);
+        window.document.addEventListener('mouseup', _this.onMouseUp);
+      }
     };
 
     _this.onTouchStart = function (e) {
@@ -105,19 +109,10 @@ var Selection = function (_React$PureComponent) {
         return;
       }
 
-      var nextState = {};
-      if (e.ctrlKey || e.altKey || e.shiftKey) {
-        nextState.appendMode = true;
+      if (_this.init(e, e.touches[0].pageX, e.touches[0].pageY)) {
+        window.document.addEventListener('touchmove', _this.onTouchMove);
+        window.document.addEventListener('touchend', _this.onMouseUp);
       }
-      nextState.mouseDown = true;
-      nextState.startPoint = {
-        x: e.touches[0].pageX - _this.state.offset.left,
-        y: e.touches[0].pageY - _this.state.offset.top
-      };
-
-      _this.setState(nextState);
-      window.document.addEventListener('touchmove', _this.onTouchMove);
-      window.document.addEventListener('touchend', _this.onMouseUp);
     };
 
     _this.onMouseUp = function () {

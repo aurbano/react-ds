@@ -114,15 +114,7 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
     }
   };
 
-  /**
-   * On root element mouse down
-   * @private
-   */
-  onMouseDown = (e: MouseEvent) => {
-    if (this.props.disabled || e.button === 2 || (e.nativeEvent && e.nativeEvent.which === 2)) {
-      return;
-    }
-
+  init = (e: Event, x: number, y: number): boolean => {
     if (this.props.ignoreTargets) {
       const Target = (e.target: any);
       if (!Target.matches) {
@@ -141,10 +133,9 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
           };
       }
       if (Target.matches && Target.matches(this.props.ignoreTargets.join(','))) {
-        return;
+        return false;
       }
     }
-
     const nextState = {};
     if (e.ctrlKey || e.altKey || e.shiftKey) {
       nextState.appendMode = true;
@@ -154,14 +145,27 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
 
     nextState.mouseDown = true;
     nextState.startPoint = {
-      x: (e.pageX * zoom) - this.state.offset.left,
-      y: (e.pageY * zoom) - this.state.offset.top,
+      x: (x * zoom) - this.state.offset.left,
+      y: (y * zoom) - this.state.offset.top,
     };
 
     this.setState(nextState);
+    return true;
+  };
 
-    window.document.addEventListener('mousemove', this.onMouseMove);
-    window.document.addEventListener('mouseup', this.onMouseUp);
+  /**
+   * On root element mouse down
+   * @private
+   */
+  onMouseDown = (e: MouseEvent) => {
+    if (this.props.disabled || e.button === 2 || (e.nativeEvent && e.nativeEvent.which === 2)) {
+      return;
+    }
+
+    if (this.init(e, e.pageX, e.pageY)) {
+      window.document.addEventListener('mousemove', this.onMouseMove);
+      window.document.addEventListener('mouseup', this.onMouseUp);
+    }
   };
 
   onTouchStart = (e: TouchEvent) => {
@@ -169,19 +173,10 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       return;
     }
 
-    const nextState = {};
-    if (e.ctrlKey || e.altKey || e.shiftKey) {
-      nextState.appendMode = true;
+    if (this.init(e, e.touches[0].pageX, e.touches[0].pageY)) {
+      window.document.addEventListener('touchmove', this.onTouchMove);
+      window.document.addEventListener('touchend', this.onMouseUp);
     }
-    nextState.mouseDown = true;
-    nextState.startPoint = {
-      x: e.touches[0].pageX - this.state.offset.left,
-      y: e.touches[0].pageY - this.state.offset.top,
-    };
-
-    this.setState(nextState);
-    window.document.addEventListener('touchmove', this.onTouchMove);
-    window.document.addEventListener('touchend', this.onMouseUp);
   };
 
   /**

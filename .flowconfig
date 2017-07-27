@@ -5,7 +5,6 @@
 .*/node_modules/flow-runtime/.*
 .*/node_modules/.staging/.*
 .*/node_modules/kefir/.*
-.*/dist/.*
 
 [include]
 

@@ -114,6 +114,45 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
     }
   };
 
+  init = (e: Event, x: number, y: number): boolean => {
+    if (this.props.ignoreTargets) {
+      const Target = (e.target: any);
+      if (!Target.matches) {
+        // polyfill matches
+        Target.matches =
+          Target.matchesSelector ||
+          Target.mozMatchesSelector ||
+          Target.msMatchesSelector ||
+          Target.oMatchesSelector ||
+          Target.webkitMatchesSelector ||
+          function (s) {
+            const matches = (this.document || this.ownerDocument).querySelectorAll(s);
+            let i = matches.length;
+            while (--i >= 0 && matches.item(i) !== this) {} // eslint-disable-line no-empty
+            return i > -1;
+          };
+      }
+      if (Target.matches && Target.matches(this.props.ignoreTargets.join(','))) {
+        return false;
+      }
+    }
+    const nextState = {};
+    if (e.ctrlKey || e.altKey || e.shiftKey) {
+      nextState.appendMode = true;
+    }
+
+    const zoom = this.props.zoom || 1;
+
+    nextState.mouseDown = true;
+    nextState.startPoint = {
+      x: (x * zoom) - this.state.offset.left,
+      y: (y * zoom) - this.state.offset.top,
+    };
+
+    this.setState(nextState);
+    return true;
+  };
+
   /**
    * On root element mouse down
    * @private
@@ -123,45 +162,10 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       return;
     }
 
-    if (this.props.ignoreTargets) {
-      const Target = e.target;
-      if (!Target.matches) {
-        // polyfill matches
-        Target.matches =
-          Target.matchesSelector ||
-          Target.mozMatchesSelector ||
-          Target.msMatchesSelector ||
-          Target.oMatchesSelector ||
-          Target.webkitMatchesSelector ||
-          function(s) {
-            const matches = (this.document || this.ownerDocument).querySelectorAll(s);
-            let i = matches.length;
-            while (--i >= 0 && matches.item(i) !== this) {}
-            return i > -1;
-          };
-      }
-      if (Target.matches && Target.matches(this.props.ignoreTargets.join(','))) {
-        return;
-      }
+    if (this.init(e, e.pageX, e.pageY)) {
+      window.document.addEventListener('mousemove', this.onMouseMove);
+      window.document.addEventListener('mouseup', this.onMouseUp);
     }
-
-    const nextState = {};
-    if (e.ctrlKey || e.altKey || e.shiftKey) {
-      nextState.appendMode = true;
-    }
-    
-    const zoom = this.props.zoom || 1;
-
-    nextState.mouseDown = true;
-    nextState.startPoint = {
-      x: (e.pageX * zoom) - this.state.offset.left,
-      y: (e.pageY * zoom) - this.state.offset.top,
-    };
-
-    this.setState(nextState);
-
-    window.document.addEventListener('mousemove', this.onMouseMove);
-    window.document.addEventListener('mouseup', this.onMouseUp);
   };
 
   onTouchStart = (e: TouchEvent) => {
@@ -169,19 +173,10 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       return;
     }
 
-    const nextState = {};
-    if (e.ctrlKey || e.altKey || e.shiftKey) {
-      nextState.appendMode = true;
+    if (this.init(e, e.touches[0].pageX, e.touches[0].pageY)) {
+      window.document.addEventListener('touchmove', this.onTouchMove);
+      window.document.addEventListener('touchend', this.onMouseUp);
     }
-    nextState.mouseDown = true;
-    nextState.startPoint = {
-      x: e.touches[0].pageX - this.state.offset.left,
-      y: e.touches[0].pageY - this.state.offset.top,
-    };
-
-    this.setState(nextState);
-    window.document.addEventListener('touchmove', this.onTouchMove);
-    window.document.addEventListener('touchend', this.onMouseUp);
   };
 
   /**
