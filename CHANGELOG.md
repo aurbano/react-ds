@@ -1,19 +1,34 @@
 # Change Log
 
-## [v1.4.1](https://github.com/aurbano/react-ds/tree/v1.4.0)
+## [v1.7.0](https://github.com/aurbano/react-ds/tree/v1.7.0) (2017-07-27)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.6.0...v1.7.0)
 
-[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.4.0...v1.4.0)
+**Closed issues:**
+
+- Add option to ignore certain targets when initiating selects [\#7](https://github.com/aurbano/react-ds/issues/7)
+
+## [v1.6.0](https://github.com/aurbano/react-ds/tree/v1.6.0) (2017-07-25)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.5.0...v1.6.0)
+
+## [v1.5.0](https://github.com/aurbano/react-ds/tree/v1.5.0) (2017-07-13)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.4.1...v1.5.0)
+
+## [v1.4.1](https://github.com/aurbano/react-ds/tree/v1.4.1) (2017-07-13)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.4.0...v1.4.1)
 
 **Closed issues:**
 
 - Move react to peerDependencies [\#5](https://github.com/aurbano/react-ds/issues/5)
 
 ## [v1.4.0](https://github.com/aurbano/react-ds/tree/v1.4.0) (2017-07-12)
-[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.2.0...v1.4.0)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.3.0...v1.4.0)
 
 **Fixed bugs:**
 
 - Items not properly selected when scrolled [\#4](https://github.com/aurbano/react-ds/issues/4)
+
+## [v1.3.0](https://github.com/aurbano/react-ds/tree/v1.3.0) (2017-07-12)
+[Full Changelog](https://github.com/aurbano/react-ds/compare/v1.2.0...v1.3.0)
 
 ## [v1.2.0](https://github.com/aurbano/react-ds/tree/v1.2.0) (2017-07-12)
 [Full Changelog](https://github.com/aurbano/react-ds/compare/v1.1.0...v1.2.0)
