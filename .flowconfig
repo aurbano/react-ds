@@ -4,6 +4,8 @@
 .*/node_modules/eslint-plugin-jsx-a11y/.*
 .*/node_modules/flow-runtime/.*
 .*/node_modules/.staging/.*
+.*/node_modules/kefir/.*
+.*/dist/.*
 
 [include]
 

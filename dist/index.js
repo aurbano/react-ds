@@ -65,6 +65,22 @@ var Selection = function (_React$PureComponent) {
         return;
       }
 
+      if (_this.props.ignoreTargets) {
+        var Target = e.target;
+        if (!Target.matches) {
+          // polyfill matches
+          Target.matches = Target.matchesSelector || Target.mozMatchesSelector || Target.msMatchesSelector || Target.oMatchesSelector || Target.webkitMatchesSelector || function (s) {
+            var matches = (this.document || this.ownerDocument).querySelectorAll(s);
+            var i = matches.length;
+            while (--i >= 0 && matches.item(i) !== this) {}
+            return i > -1;
+          };
+        }
+        if (Target.matches && Target.matches(_this.props.ignoreTargets.join(','))) {
+          return;
+        }
+      }
+
       var nextState = {};
       if (e.ctrlKey || e.altKey || e.shiftKey) {
         nextState.appendMode = true;

@@ -33,12 +33,7 @@
       "error",
       "prefer-single"
     ],
-    "no-plusplus": [
-      2,
-      {
-        "allowForLoopAfterthoughts": true
-      }
-    ],
+    "no-plusplus": 0,
     "no-nested-ternary": 1,
     "arrow-parens": 0,
     "object-curly-spacing": [

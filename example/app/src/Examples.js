@@ -22,6 +22,14 @@ export default class Examples extends React.PureComponent {
         <p>Here's an example using custom styles for the selection box. These are simply passed on the <code>style</code> prop of the <code>Selection</code> component.</p>
 
         <Example style={ { background: 'rgba(0,0,0,0.3)' } } />
+
+        <h2 style={ { marginTop: '2em' } }>Ignore certain targets</h2>
+
+        <p>You can also ignore certain targets from initiating selects. This is specially useful because <code>react-ds</code> uses native events which bypass React's synthetic event queue.</p>
+
+        <p>In this example, events initiated over the item <b>"three"</b> are ignored.</p>
+
+        <Example ignoreTargets={ ['.item-three'] }/>
       </div>
     );
   }

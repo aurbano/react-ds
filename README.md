@@ -89,6 +89,12 @@ const style = {
 }
 ```
 
+#### `ignoreTargets` *(Optional)*
+
+Specify an array of CSS3 selectors for DOM targets that should be ignored when initiating a selection.
+
+This is specially useful because `react-ds` uses native browser events that bypass React's event queue, so you won't be able to `stopPropagation` as usual.
+
 ## Example
 
 This example was taken from [`example/app/src/Example.js`](https://github.com/aurbano/react-ds/blob/master/example/app/src/Example.js) which you can see running at https://aurbano.eu/react-ds/

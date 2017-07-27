@@ -28,6 +28,7 @@ type Props = {
   },
   style: ?any,
   zoom?: number,
+  ignoreTargets?: Array<string>,
 };
 
 type State = {
@@ -122,11 +123,33 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       return;
     }
 
+    if (this.props.ignoreTargets) {
+      const Target = (e.target: any);
+      if (!Target.matches) {
+        // polyfill matches
+        Target.matches =
+          Target.matchesSelector ||
+          Target.mozMatchesSelector ||
+          Target.msMatchesSelector ||
+          Target.oMatchesSelector ||
+          Target.webkitMatchesSelector ||
+          function (s) {
+            const matches = (this.document || this.ownerDocument).querySelectorAll(s);
+            let i = matches.length;
+            while (--i >= 0 && matches.item(i) !== this) {} // eslint-disable-line no-empty
+            return i > -1;
+          };
+      }
+      if (Target.matches && Target.matches(this.props.ignoreTargets.join(','))) {
+        return;
+      }
+    }
+
     const nextState = {};
     if (e.ctrlKey || e.altKey || e.shiftKey) {
       nextState.appendMode = true;
     }
-    
+
     const zoom = this.props.zoom || 1;
 
     nextState.mouseDown = true;
@@ -334,4 +357,5 @@ Selection.propTypes = {
   offset: PropTypes.object,
   zoom: PropTypes.number,
   style: PropTypes.object,
+  ignoreTargets: PropTypes.array,
 };

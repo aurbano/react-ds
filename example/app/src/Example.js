@@ -50,6 +50,7 @@ export default class Example extends React.PureComponent {
         elements={ this.state.elRefs }
         onSelectionChange={ this.handleSelection }
         style={ this.props.style }
+        ignoreTargets={ this.props.ignoreTargets }
       />
     );
   }
@@ -72,7 +73,7 @@ export default class Example extends React.PureComponent {
             key={ el }
             ref={ this.addElementRef }
             style={ this.getStyle(index) }
-            className='item'
+            className={ `item item-${el}` }
           >
             { el }
           </div>
@@ -85,4 +86,5 @@ export default class Example extends React.PureComponent {
 
 Example.PropTypes = {
   style: PropTypes.object,
+  ignoreTargets: PropTypes.array,
 };
