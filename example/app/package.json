@@ -4,10 +4,10 @@
   "private": true,
   "homepage": "https://aurbano.eu/react-ds/",
   "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-ds": "file:../../",
-    "react-scripts": "1.0.10"
+    "react-scripts": "1.0.14"
   },
   "scripts": {
     "build:less": "./node_modules/.bin/lessc src/example.less src/example.css",

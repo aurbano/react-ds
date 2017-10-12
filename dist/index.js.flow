@@ -20,6 +20,7 @@ type Props = {
   target: HTMLElement,
   onSelectionChange(elements: Array<any>): void,
   elements: Array<HTMLElement>,
+  // eslint-disable-next-line react/no-unused-prop-types
   offset?: {
     // eslint-disable-next-line react/no-unused-prop-types
     top: number,
@@ -36,7 +37,6 @@ type State = {
   startPoint: ?Point,
   endPoint: ?Point,
   selectionBox: ?Box,
-  appendMode: boolean,
   offset: {
     top: number,
     left: number,
@@ -49,7 +49,9 @@ function getOffset(props: Props) {
     left: 0,
   };
   if (props.offset) {
-    offset = props.offset;
+    offset = {
+      ...props.offset,
+    };
   } else if (props.target) {
     const boundingBox = props.target.getBoundingClientRect();
     offset.top = boundingBox.top + window.scrollY;
@@ -58,7 +60,7 @@ function getOffset(props: Props) {
   return offset;
 }
 
-export default class Selection extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export default class Selection extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
   props: Props;
   state: State;
   selectedChildren: Array<number>;
@@ -71,7 +73,6 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       startPoint: null,
       endPoint: null,
       selectionBox: null,
-      appendMode: false,
       offset: getOffset(props),
     };
 
@@ -119,27 +120,22 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       const Target = (e.target: any);
       if (!Target.matches) {
         // polyfill matches
+        const defaultMatches = (s: string) => {
+          return [].indexOf.call(window.document.querySelectorAll(s), this) !== -1;
+        };
         Target.matches =
           Target.matchesSelector ||
           Target.mozMatchesSelector ||
           Target.msMatchesSelector ||
           Target.oMatchesSelector ||
           Target.webkitMatchesSelector ||
-          function (s) {
-            const matches = (this.document || this.ownerDocument).querySelectorAll(s);
-            let i = matches.length;
-            while (--i >= 0 && matches.item(i) !== this) {} // eslint-disable-line no-empty
-            return i > -1;
-          };
+          defaultMatches;
       }
       if (Target.matches && Target.matches(this.props.ignoreTargets.join(','))) {
         return false;
       }
     }
     const nextState = {};
-    if (e.ctrlKey || e.altKey || e.shiftKey) {
-      nextState.appendMode = true;
-    }
 
     const zoom = this.props.zoom || 1;
 
@@ -194,7 +190,6 @@ export default class Selection extends React.PureComponent { // eslint-disable-l
       startPoint: null,
       endPoint: null,
       selectionBox: null,
-      appendMode: false,
     });
 
     this.props.onSelectionChange(this.selectedChildren);
