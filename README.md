@@ -30,17 +30,16 @@ $ yarn add react-ds
 ```jsx
 import Selection from 'react-ds';
 
-
+// target (ref) is the parent component (so that selects only happen when clicking and dragging on it)
+// elements (refs[]) is an array of refs to the components that are selectable
 <Selection
-    target={ ref}
+    target={ ref }
     elements={ refs[] }
     onSelectionChange={ this.handleSelection }
 />
 ```
 
 ### Props
-
-Docs on each prop, see them in action in the example below.
 
 #### `target`
 
@@ -58,7 +57,7 @@ The should exist before rendering the `Selection` component.
 
 Function that will be executed when the selection changes. An array of element indexes will be passed (with the same indexes as the `elements` prop).
 
-This is where you probably want to update your state, to highlight them as selected for example.
+This is where you want to update your state, to highlight them as selected for example.
 
 #### `offset` *(Optional)*
 
@@ -69,7 +68,7 @@ Essentially you need to pass the offset of the parent element where the Selectio
 If passing your own offset keep in mind that `getBoundingClientRect()` depends on the scroll, so you may want to do something like this:
 
 ```js
-const boundingBox = props.target.getBoundingClientRect();
+const boundingBox = target.getBoundingClientRect();
 const offset = {
   top: boundingBox.top + window.scrollY,
   left: boundingBox.left + window.scrollX,
@@ -79,6 +78,8 @@ const offset = {
 #### `style` *(Optional)*
 
 If you want to override the styles for the selection area, you can either pass any styles here, or use css and declare any styles on the `.react-ds-border` class.
+
+The styles are merged, so you can override just one property if you need (typically the `zIndex`).
 
 The default styles are:
 
@@ -96,7 +97,7 @@ const style = {
 
 Specify an array of CSS3 selectors for DOM targets that should be ignored when initiating a selection.
 
-This is specially useful because `react-ds` uses native browser events that bypass React's event queue, so you won't be able to `stopPropagation` as usual.
+>This is specially useful because `react-ds` uses native browser events that bypass React's event queue, so you won't be able to `stopPropagation` as usual.
 
 ## Example
 
