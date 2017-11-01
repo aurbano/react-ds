@@ -28,6 +28,9 @@ $ yarn add react-ds
 ## Usage
 
 ```jsx
+import Selection from 'react-ds';
+
+
 <Selection
     target={ ref}
     elements={ refs[] }
