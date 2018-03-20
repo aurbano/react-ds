@@ -1,6 +1,6 @@
 {
   "name": "react-ds",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "Simple React Drag-to-Select component",
   "main": "dist/index.js",
   "files": [
