@@ -48,89 +48,64 @@
   },
   "homepage": "https://github.com/aurbano/react-ds#readme",
   "peerDependencies": {
-    "prop-types": "^15.0",
     "react": "^^15.0.0-rc || ^15.0 || ^16.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-dynamic-import-node": "^1.1.0",
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-eslint": "8.2.2",
+    "babel-jest": "^23.0.0-alpha.0",
+    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-flow-react-proptypes": "^12.1.0",
+    "babel-plugin-flow-runtime": "^0.17.0",
+    "babel-plugin-react-intl": "^2.4.0",
+    "babel-plugin-react-transform": "3.0.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-inline-elements": "^6.22.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.9",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-latest": "^6.24.1",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "codacy-coverage": "^2.0.3",
+    "codacy-coverage": "^2.1.0",
     "coveralls": "^3.0.0",
-    "cross-env": "^5.0.5",
-    "enzyme": "^3.1.0",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb": "^16.0.0",
-    "eslint-plugin-flowtype": "^2.39.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0",
-    "flow-bin": "^0.56.0",
-    "flow-copy-source": "^1.2.1",
-    "flow-runtime": "^0.14.0",
-    "gh-pages": "^1.0.0",
+    "cross-env": "^5.1.4",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "flow-bin": "^0.68.0",
+    "flow-copy-source": "^1.3.0",
+    "flow-runtime": "^0.17.0",
+    "gh-pages": "^1.1.0",
     "gulp": "^3.9.1",
-    "jasmine": "^2.8.0",
-    "jasmine-reporters": "^2.2.1",
-    "jest": "^21.2.1",
-    "jest-cli": "^21.2.1",
-    "lint-staged": "^4.2.3",
-    "lodash": "^4.17.4",
+    "jasmine": "^3.1.0",
+    "jasmine-reporters": "^2.3.0",
+    "jest": "^22.4.2",
+    "jest-cli": "^23.0.0-alpha.0",
+    "lint-staged": "^7.0.0",
+    "lodash": "^4.17.5",
     "pre-commit": "^1.2.2",
-    "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-test-renderer": "^16.0.0",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
     "rimraf": "^2.6.2",
-    "sinon": "^4.0.1",
-    "uglify-es": "^3.1.3"
+    "sinon": "^4.4.6",
+    "uglify-es": "^3.3.9"
   },
   "lint-staged": {
     "*.js": "lint:eslint"
   },
   "pre-commit": "lint:staged",
-  "babel": {
-    "presets": [
-      [
-        "latest",
-        {
-          "es2015": {
-            "modules": false
-          }
-        }
-      ],
-      "react",
-      "stage-0"
-    ],
-    "env": {
-      "production": {
-        "plugins": [
-          "transform-es2015-modules-commonjs",
-          "transform-flow-strip-types",
-          "transform-react-remove-prop-types",
-          "transform-react-constant-elements",
-          "transform-react-inline-elements"
-        ]
-      },
-      "test": {
-        "plugins": [
-          "transform-es2015-modules-commonjs",
-          "dynamic-import-node"
-        ]
-      }
-    }
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"

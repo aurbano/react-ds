@@ -120,9 +120,9 @@ export default class Selection extends React.PureComponent<Props, State> { // es
       const Target = (e.target: any);
       if (!Target.matches) {
         // polyfill matches
-        const defaultMatches = (s: string) => {
-          return [].indexOf.call(window.document.querySelectorAll(s), this) !== -1;
-        };
+        const defaultMatches = (s: string) => (
+          [].indexOf.call(window.document.querySelectorAll(s), this) !== -1
+        );
         Target.matches =
           Target.matchesSelector ||
           Target.mozMatchesSelector ||
@@ -151,9 +151,10 @@ export default class Selection extends React.PureComponent<Props, State> { // es
 
   /**
    * On root element mouse down
+   * The event should be a MouseEvent | TouchEvent, but flow won't get it...
    * @private
    */
-  onMouseDown = (e: MouseEvent) => {
+  onMouseDown = (e: MouseEvent | any) => {
     if (this.props.disabled || e.button === 2 || (e.nativeEvent && e.nativeEvent.which === 2)) {
       return;
     }

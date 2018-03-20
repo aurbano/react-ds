@@ -1,25 +1,29 @@
 [ignore]
-.*/node_modules/babel-plugin-transform-react-remove-prop-types/.*
-.*/node_modules/babel-plugin-flow-runtime/.*
-.*/node_modules/eslint-plugin-jsx-a11y/.*
-.*/node_modules/flow-runtime/.*
-.*/node_modules/.staging/.*
-.*/node_modules/kefir/.*
-.*/example/.*
-.*/dist/.*
+<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/.*
+<PROJECT_ROOT>/node_modules/babel-plugin-flow-runtime/.*
+<PROJECT_ROOT>/node_modules/eslint-plugin-jsx-a11y/.*
+<PROJECT_ROOT>/node_modules/flow-runtime/.*
+<PROJECT_ROOT>/node_modules/.staging/.*
+<PROJECT_ROOT>/node_modules/kefir/.*
+<PROJECT_ROOT>/example/.*
+<PROJECT_ROOT>/dist/.*
 
 [include]
 
 [libs]
 
-[options]
-# Replicate WebPack's resolution directories
-module.system.node.resolve_dirname=node_modules
-module.system.node.resolve_dirname=src
+[lints]
 
+[options]
 # Support ES7 classes
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
+esproposal.export_star_as=enable
 
-# Support @decorators
-esproposal.decorators=ignore
+# Warn on @decorators
+esproposal.decorators=warn
+
+# Experimental settings
+experimental.const_params=true
+
+[strict]
