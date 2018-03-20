@@ -103,7 +103,7 @@
     "uglify-es": "^3.3.9"
   },
   "lint-staged": {
-    "*.js": "lint:eslint"
+    "*.js": "npm run lint:eslint"
   },
   "pre-commit": "lint:staged",
   "jest": {
