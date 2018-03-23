@@ -3,7 +3,10 @@
     [
       "env",
       {
-        "modules": false
+        "modules": "commonjs",
+        "targets": {
+          "browsers": ["last 2 versions", "safari >= 7"]
+        }
       }
     ],
     "flow",

@@ -5,3 +5,4 @@ example/**/*
 test/**/*
 
 gulpfile.js
+rollup.config.js
