@@ -95,9 +95,18 @@ const style = {
 
 #### `ignoreTargets` *(Optional)*
 
-Specify an array of CSS3 selectors for DOM targets that should be ignored when initiating a selection.
+Specify an array of CSS3 selectors for DOM targets that should be ignored when initiating a selection. i.e. `[`div`, `div > p`, `#someId`]`
 
 >This is specially useful because `react-ds` uses native browser events that bypass React's event queue, so you won't be able to `stopPropagation` as usual.
+
+```js
+<Selection
+    target={ this.state.ref}
+    elements={ this.state.elRefs }
+    onSelectionChange={ this.handleSelection }
+    ignoreTargets={ ['.handle'] }
+/>
+```
 
 ## Example
 
