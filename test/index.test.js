@@ -25,7 +25,6 @@ const initialState = {
   startPoint: null,
   endPoint: null,
   selectionBox: null,
-  appendMode: false,
   offset: defaultProps.offset,
 };
 
