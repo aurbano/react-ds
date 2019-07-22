@@ -19,6 +19,7 @@ type Props = {
   disabled?: boolean,
   target: HTMLElement,
   onSelectionChange(elements: Array<any>): void,
+  onHighlightChange(elements: Array<any>): void,
   elements: Array<HTMLElement>,
   // eslint-disable-next-line react/no-unused-prop-types
   offset?: {
@@ -64,6 +65,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
   props: Props;
   state: State;
   selectedChildren: Array<number>;
+  highlightedChildren: Array<number>;
 
   constructor(props: Props) {
     super(props);
@@ -77,6 +79,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     };
 
     this.selectedChildren = [];
+    this.highlightedChildren = [];
   }
 
   componentDidMount() {
@@ -194,6 +197,10 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     });
 
     this.props.onSelectionChange(this.selectedChildren);
+    if (this.props.onHighlightChange) {
+      this.highlightedChildren = [];
+      this.props.onHighlightChange(this.highlightedChildren);
+    }
     this.selectedChildren = [];
   };
 
@@ -269,7 +276,8 @@ export default class Selection extends React.PureComponent<Props, State> { // es
 
   /**
    * Updates the selected items based on the
-   * collisions with selectionBox
+   * collisions with selectionBox,
+   * also updates the highlighted items if they have changed
    * @private
    */
   updateCollidingChildren = (selectionBox: Box) => {
@@ -290,6 +298,16 @@ export default class Selection extends React.PureComponent<Props, State> { // es
           }
         }
       });
+    }
+    if (this.props.onHighlightChange && JSON.stringify(this.highlightedChildren) !== JSON.stringify(this.selectedChildren)) {
+      this.highlightedChildren = [...this.selectedChildren];
+      if (window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          this.props.onHighlightChange(this.highlightedChildren);
+        });
+      } else {
+        this.props.onHighlightChange(this.highlightedChildren);
+      }
     }
   };
 
@@ -343,6 +361,7 @@ Selection.propTypes = {
   target: PropTypes.object,
   disabled: PropTypes.bool,
   onSelectionChange: PropTypes.func.isRequired,
+  onHighlightChange: PropTypes.func,
   elements: PropTypes.array.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   offset: PropTypes.object,
