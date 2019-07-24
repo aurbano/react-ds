@@ -65,6 +65,8 @@ While dragging, `onHighlightChange` is called only when the highlighted elements
 
 When the mouse is released, it will be called with an empty array.
 
+![onHighlightChange Example](https://user-images.githubusercontent.com/1640952/61724315-0269b280-ad6e-11e9-899c-4466e090cb13.gif)
+
 #### `offset` *(Optional)*
 
 This is used to calculate the coordinates of the mouse when drawing the Selection box, since the mouse events gives coordinates relative to the document, but the Selection box may have a different parent.
