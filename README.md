@@ -59,6 +59,12 @@ Function that will be executed when the selection changes. An array of element i
 
 This is where you want to update your state, to highlight them as selected for example.
 
+#### `onHighlightChange`
+
+While dragging, `onHighlightChange` is called only when the highlighted elements have changed.
+
+When the mouse is released, it will be called with an empty array.
+
 #### `offset` *(Optional)*
 
 This is used to calculate the coordinates of the mouse when drawing the Selection box, since the mouse events gives coordinates relative to the document, but the Selection box may have a different parent.
