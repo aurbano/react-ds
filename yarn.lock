@@ -99,7 +99,7 @@
 
 "@sinonjs/formatio@^2.0.0":
   version "2.0.0"
-  resolved "http://registry.npmjs.org/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
+  resolved "https://registry.npmjs.org/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
   dependencies:
     samsam "1.3.0"
 
@@ -484,7 +484,7 @@ babel-core@^6.0.0, babel-core@^6.24.1:
 
 babel-eslint@8.2.2:
   version "8.2.2"
-  resolved "http://registry.npmjs.org/babel-eslint/-/babel-eslint-8.2.2.tgz#1102273354c6f0b29b4ea28a65f97d122296b68b"
+  resolved "https://registry.npmjs.org/babel-eslint/-/babel-eslint-8.2.2.tgz#1102273354c6f0b29b4ea28a65f97d122296b68b"
   dependencies:
     "@babel/code-frame" "^7.0.0-beta.40"
     "@babel/traverse" "^7.0.0-beta.40"
@@ -5493,15 +5493,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.6.0:
-  version "15.6.0"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
-  dependencies:
-    fbjs "^0.8.16"
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
-prop-types@^15.6.1:
+prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -5574,8 +5566,8 @@ rc@^1.1.7:
     strip-json-comments "~2.0.1"
 
 react-dom@^16.2.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
+  version "16.2.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.1.tgz#5cfb32f66267ece7b3850466bf3b219d4911fc1a"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
