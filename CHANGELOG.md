@@ -1,5 +1,13 @@
 # Change Log
 
+> I haven't been maintaining this changelog.
+>
+> Check out the [releases](https://github.com/aurbano/react-ds/releases) section instead.
+
+------
+
+# Old Changelog
+
 ## [v1.7.0](https://github.com/aurbano/react-ds/tree/v1.7.0) (2017-07-27)
 [Full Changelog](https://github.com/aurbano/react-ds/compare/v1.6.0...v1.7.0)
 
