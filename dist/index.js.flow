@@ -18,8 +18,8 @@ export type Box = {
 type Props = {
   disabled?: boolean,
   target: HTMLElement,
-  onSelectionChange(elements: Array<any>): void,
-  onHighlightChange(elements: Array<any>): void,
+  onSelectionChange?: (elements: Array<any>) => void,
+  onHighlightChange?: (elements: Array<any>) => void,
   elements: Array<HTMLElement>,
   // eslint-disable-next-line react/no-unused-prop-types
   offset?: {
@@ -196,7 +196,10 @@ export default class Selection extends React.PureComponent<Props, State> { // es
       selectionBox: null,
     });
 
-    this.props.onSelectionChange(this.selectedChildren);
+    if (this.props.onSelectionChange) {
+      this.props.onSelectionChange(this.selectedChildren);
+    }
+
     if (this.props.onHighlightChange) {
       this.highlightedChildren = [];
       this.props.onHighlightChange(this.highlightedChildren);
@@ -300,13 +303,14 @@ export default class Selection extends React.PureComponent<Props, State> { // es
       });
     }
     if (this.props.onHighlightChange && JSON.stringify(this.highlightedChildren) !== JSON.stringify(this.selectedChildren)) {
+      const { onHighlightChange } = this.props;
       this.highlightedChildren = [...this.selectedChildren];
       if (window.requestAnimationFrame) {
         window.requestAnimationFrame(() => {
-          this.props.onHighlightChange(this.highlightedChildren);
+          onHighlightChange(this.highlightedChildren);
         });
       } else {
-        this.props.onHighlightChange(this.highlightedChildren);
+        onHighlightChange(this.highlightedChildren);
       }
     }
   };
