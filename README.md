@@ -55,7 +55,7 @@ The should exist before rendering the `Selection` component.
 
 #### `onSelectionChange`
 
-Function that will be executed when the selection changes. An array of element indexes will be passed (with the same indexes as the `elements` prop).
+Function that will be executed when the selection changes. An array of element indexes will be passed (with the same indexes as the `elements` prop) as the first argument. The second argument will contain the dragging `endPoint` object with `x` and `y` values.
 
 This is where you want to update your state, to highlight them as selected for example.
 
