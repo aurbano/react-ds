@@ -1,0 +1,11 @@
+{
+    "flow.useNPMPackagedFlow": true,
+    "javascript.validate.enable": false,
+    "files.associations": {
+        "*.overrides": "less",
+        "*.variables": "less",
+        "theme.config": "less",
+    },
+    "flow.showUncovered": true,
+    "flow.logLevel": "warn"
+}

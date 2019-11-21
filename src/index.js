@@ -343,15 +343,22 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    * Render
    */
   render() {
-    const style = {
+    let style: any = {
       position: 'absolute',
       background: 'rgba(159, 217, 255, 0.3)',
       border: 'solid 1px rgba(123, 123, 123, 0.61)',
       zIndex: 9,
       cursor: 'crosshair',
-      ...this.state.selectionBox,
       ...this.props.style,
     };
+
+    if (this.state.selectionBox) {
+      style = {
+        ...style,
+        ...this.state.selectionBox,
+      };
+    }
+
     if (!this.state.mouseDown || !this.state.endPoint || !this.state.startPoint) {
       return null;
     }
