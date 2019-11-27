@@ -42,6 +42,7 @@ type State = {
     top: number,
     left: number,
   },
+  zoom: number,
 };
 
 function getOffset(props: Props) {
@@ -76,6 +77,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
       endPoint: null,
       selectionBox: null,
       offset: getOffset(props),
+      zoom: props.zoom || 1,
     };
 
     this.selectedChildren = [];
@@ -140,12 +142,11 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     }
     const nextState = {};
 
-    const zoom = this.props.zoom || 1;
 
     nextState.mouseDown = true;
     nextState.startPoint = {
-      x: (x * zoom) - this.state.offset.left,
-      y: (y * zoom) - this.state.offset.top,
+      x: (x - this.state.offset.left) / this.state.zoom,
+      y: (y - this.state.offset.top) / this.state.zoom,
     };
 
     this.setState(nextState);
@@ -215,8 +216,8 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     e.preventDefault();
     if (this.state.mouseDown) {
       const endPoint: Point = {
-        x: e.pageX - this.state.offset.left,
-        y: e.pageY - this.state.offset.top,
+        x: (e.pageX - this.state.offset.left) / this.state.zoom,
+        y: (e.pageY - this.state.offset.top) / this.state.zoom,
       };
 
       this.setState({
@@ -233,8 +234,8 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     e.preventDefault();
     if (this.state.mouseDown) {
       const endPoint: Point = {
-        x: e.touches[0].pageX - this.state.offset.left,
-        y: e.touches[0].pageY - this.state.offset.top,
+        x: (e.touches[0].pageX - this.state.offset.left) / this.state.zoom,
+        y: (e.touches[0].pageY - this.state.offset.top) / this.state.zoom,
       };
 
       this.setState({
@@ -290,8 +291,8 @@ export default class Selection extends React.PureComponent<Props, State> { // es
         if (ref) {
           const refBox = ref.getBoundingClientRect();
           const tmpBox = {
-            top: (refBox.top - this.state.offset.top) + window.scrollY,
-            left: (refBox.left - this.state.offset.left) + window.scrollX,
+            top: ((refBox.top - this.state.offset.top) + window.scrollY) / this.state.zoom,
+            left: ((refBox.left - this.state.offset.left) + window.scrollX) / this.state.zoom,
             width: ref.clientWidth,
             height: ref.clientHeight,
           };
