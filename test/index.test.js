@@ -18,6 +18,7 @@ const defaultProps = {
     top: 0,
     left: 0,
   },
+  zoom: 1,
 };
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
   endPoint: null,
   selectionBox: null,
   offset: defaultProps.offset,
+  zoom: defaultProps.zoom,
 };
 
 describe('<Selection />', () => {
