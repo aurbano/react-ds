@@ -84,15 +84,15 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     this.highlightedChildren = [];
   }
 
+  static getDerivedStateFromProps(nextProps: Props) {
+    return {
+      offset: getOffset(nextProps),
+    };
+  }
+
   componentDidMount() {
     this.reset();
     this.bind();
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    this.setState({
-      offset: getOffset(nextProps),
-    });
   }
 
   componentDidUpdate() {
