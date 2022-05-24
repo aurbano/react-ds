@@ -17,6 +17,7 @@ export type Box = {
 
 type Props = {
   disabled?: boolean,
+  confineSelectionBox?: boolean,
   target: HTMLElement,
   onSelectionChange?: (elements: Array<any>) => void,
   onHighlightChange?: (elements: Array<any>) => void,
@@ -324,14 +325,23 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     if (!this.state.mouseDown || !startPoint || !endPoint) {
       return null;
     }
-
-    // The extra 1 pixel is to ensure that the mouse is on top
-    // of the selection box and avoids triggering clicks on the target.
-    const left = Math.min(startPoint.x, endPoint.x) - 1;
-    const top = Math.min(startPoint.y, endPoint.y) - 1;
-    const width = Math.abs(startPoint.x - endPoint.x) + 1;
-    const height = Math.abs(startPoint.y - endPoint.y) + 1;
-
+    let left, top, width, height = 0;
+    if (this.props.confineSelectionBox) {
+      var refBox = this.props.target.getBoundingClientRect();
+      // The extra 1 pixel is to ensure that the mouse is on top
+      // of the selection box and avoids triggering clicks on the target.
+      left = Math.max(0, Math.min(startPoint.x, endPoint.x)) - 1;
+      top = Math.max(0, Math.min(startPoint.y, endPoint.y)) - 1;
+      width = (startPoint.x < endPoint.x ? Math.min(refBox.width - startPoint.x, Math.abs(startPoint.x - endPoint.x)) : Math.min(startPoint.x, Math.abs(startPoint.x - endPoint.x))) + 1;
+      height = (startPoint.y < endPoint.y ? Math.min(refBox.height - startPoint.y, Math.abs(startPoint.y - endPoint.y)) : Math.min(startPoint.y, Math.abs(startPoint.y - endPoint.y))) + 1;
+    } else {
+      // The extra 1 pixel is to ensure that the mouse is on top
+      // of the selection box and avoids triggering clicks on the target.
+      left = Math.min(startPoint.x, endPoint.x) - 1;
+      top = Math.min(startPoint.y, endPoint.y) - 1;
+      width = Math.abs(startPoint.x - endPoint.x) + 1;
+      height = Math.abs(startPoint.y - endPoint.y) + 1;
+    }
     return {
       left,
       top,
@@ -371,6 +381,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
 
 Selection.propTypes = {
   target: PropTypes.object,
+  confineSelectionBox: PropTypes.bool,
   disabled: PropTypes.bool,
   onSelectionChange: PropTypes.func.isRequired,
   onHighlightChange: PropTypes.func,
