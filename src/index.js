@@ -19,7 +19,7 @@ type Props = {
   disabled?: boolean,
   confineSelectionBox?: boolean,
   target: HTMLElement,
-  onSelectionChange?: (elements: Array<any>) => void,
+  onSelectionChange?: (elements: Array<any>, point: Point) => void,
   onHighlightChange?: (elements: Array<any>) => void,
   elements: Array<HTMLElement>,
   // eslint-disable-next-line react/no-unused-prop-types
@@ -191,6 +191,8 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     window.document.removeEventListener('mouseup', this.onMouseUp);
     window.document.removeEventListener('touchend', this.onMouseUp);
 
+    const endPoint = {...this.state.endPoint};
+
     this.setState({
       mouseDown: false,
       startPoint: null,
@@ -199,7 +201,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     });
 
     if (this.props.onSelectionChange) {
-      this.props.onSelectionChange(this.selectedChildren);
+      this.props.onSelectionChange(this.selectedChildren, endPoint);
     }
 
     if (this.props.onHighlightChange) {
