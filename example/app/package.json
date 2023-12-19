@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://aurbano.eu/react-ds/",
+  "homepage": "https://aurbano.github.io/react-ds/",
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

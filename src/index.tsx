@@ -1,75 +1,40 @@
-// @flow
-
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Box, Point, Projection } from './types';
+import getOffset from './util/getOffset';
 
-export type Point = {
-  x: number,
-  y: number,
-}
-
-export type Box = {
-  left: number,
-  top: number,
-  width: number,
-  height: number,
-}
-
-type Props = {
-  disabled?: boolean,
-  confineSelectionBox?: boolean,
-  target: HTMLElement,
-  onSelectionChange?: (elements: Array<any>) => void,
-  onHighlightChange?: (elements: Array<any>) => void,
-  elements: Array<HTMLElement>,
-  // eslint-disable-next-line react/no-unused-prop-types
+export type SelectionProps = {
+  disabled?: boolean;
+  confineSelectionBox?: boolean;
+  target: HTMLElement;
+  onSelectionChange?: (elements: Array<number>) => void;
+  onHighlightChange?: (elements: Array<number>) => void;
+  elements: Array<HTMLElement>;
   offset?: {
-    // eslint-disable-next-line react/no-unused-prop-types
-    top: number,
-    // eslint-disable-next-line react/no-unused-prop-types
-    left: number,
-  },
-  style?: any,
-  zoom?: number,
-  ignoreTargets?: Array<string>,
-};
-
-type State = {
-  mouseDown: boolean,
-  startPoint: ?Point,
-  endPoint: ?Point,
-  selectionBox: ?Box,
-  offset: {
-    top: number,
-    left: number,
-  },
-  zoom: number,
-};
-
-function getOffset(props: Props) {
-  let offset = {
-    top: 0,
-    left: 0,
+    top: number;
+    left: number;
   };
-  if (props.offset) {
-    offset = {
-      ...props.offset,
-    };
-  } else if (props.target) {
-    const boundingBox = props.target.getBoundingClientRect();
-    offset.top = boundingBox.top + window.scrollY;
-    offset.left = boundingBox.left + window.scrollX;
-  }
-  return offset;
-}
+  style?: React.CSSProperties;
+  zoom?: number;
+  ignoreTargets?: Array<string>;
+};
 
-export default class Selection extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
-  props: Props;
-  state: State;
+type SelectionState = {
+  mouseDown: boolean;
+  startPoint: Point | null;
+  endPoint: Point | null;
+  selectionBox: Box | null;
+  offset: {
+    top: number;
+    left: number;
+  };
+  zoom: number;
+};
+
+export default class Selection extends React.PureComponent<SelectionProps, SelectionState> {
   selectedChildren: Array<number>;
   highlightedChildren: Array<number>;
 
-  constructor(props: Props) {
+  constructor(props: SelectionProps) {
     super(props);
 
     this.state = {
@@ -85,7 +50,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     this.highlightedChildren = [];
   }
 
-  static getDerivedStateFromProps(nextProps: Props) {
+  static getDerivedStateFromProps(nextProps: SelectionProps) {
     return {
       offset: getOffset(nextProps),
     };
@@ -123,26 +88,30 @@ export default class Selection extends React.PureComponent<Props, State> { // es
 
   init = (e: Event, x: number, y: number): boolean => {
     if (this.props.ignoreTargets) {
-      const Target = (e.target: any);
-      if (!Target.matches) {
+      const Target = e.target as Element;
+
+      if (Target && !Target.matches) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const anyTarget = Target as any;
         // polyfill matches
-        const defaultMatches = (s: string) => (
-          [].indexOf.call(window.document.querySelectorAll(s), this) !== -1
-        );
+        const defaultMatches = (s: string) =>
+          [].indexOf.call(window.document.querySelectorAll(s), this as never) !== -1;
+
         Target.matches =
-          Target.matchesSelector ||
-          Target.mozMatchesSelector ||
-          Target.msMatchesSelector ||
-          Target.oMatchesSelector ||
-          Target.webkitMatchesSelector ||
+          anyTarget.matchesSelector ||
+          anyTarget.mozMatchesSelector ||
+          anyTarget.msMatchesSelector ||
+          anyTarget.oMatchesSelector ||
+          anyTarget.webkitMatchesSelector ||
           defaultMatches;
       }
       if (Target.matches && Target.matches(this.props.ignoreTargets.join(','))) {
         return false;
       }
     }
-    const nextState = {};
-
+    const nextState: SelectionState = {
+      ...this.state,
+    };
 
     nextState.mouseDown = true;
     nextState.startPoint = {
@@ -159,8 +128,15 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    * The event should be a MouseEvent | TouchEvent, but flow won't get it...
    * @private
    */
-  onMouseDown = (e: MouseEvent | any) => {
-    if (this.props.disabled || e.button === 2 || (e.nativeEvent && e.nativeEvent.which === 2)) {
+  onMouseDown = (e: MouseEvent) => {
+    // sometimes onMouseDown will fire on touch events
+    const touchEvent = e as unknown as React.SyntheticEvent;
+
+    if (
+      this.props.disabled ||
+      e.button === 2 ||
+      (touchEvent.nativeEvent && (touchEvent.nativeEvent as MouseEvent).which === 2)
+    ) {
       return;
     }
 
@@ -223,10 +199,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
 
       this.setState({
         endPoint,
-        selectionBox: this.calculateSelectionBox(
-          this.state.startPoint,
-          endPoint
-        ),
+        selectionBox: this.calculateSelectionBox(this.state.startPoint, endPoint),
       });
     }
   };
@@ -241,10 +214,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
 
       this.setState({
         endPoint,
-        selectionBox: this.calculateSelectionBox(
-          this.state.startPoint,
-          endPoint
-        ),
+        selectionBox: this.calculateSelectionBox(this.state.startPoint, endPoint),
       });
     }
   };
@@ -254,9 +224,8 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    * @param lineA [min, max]
    * @param lineB [min, max]
    */
-  lineIntersects = (lineA: [number, number], lineB: [number, number]): boolean => (
-    lineA[1] >= lineB[0] && lineB[1] >= lineA[0]
-  );
+  lineIntersects = (lineA: [number, number], lineB: [number, number]): boolean =>
+    lineA[1] >= lineB[0] && lineB[1] >= lineA[0];
 
   /**
    * Detect 2D box intersection - the two boxes will intersect
@@ -265,18 +234,20 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    */
   boxIntersects = (boxA: Box, boxB: Box): boolean => {
     // calculate coordinates of all points
-    const boxAProjection = {
+    const boxAProjection: Projection = {
       x: [boxA.left, boxA.left + boxA.width],
       y: [boxA.top, boxA.top + boxA.height],
     };
 
-    const boxBProjection = {
+    const boxBProjection: Projection = {
       x: [boxB.left, boxB.left + boxB.width],
       y: [boxB.top, boxB.top + boxB.height],
     };
 
-    return this.lineIntersects(boxAProjection.x, boxBProjection.x) &&
-           this.lineIntersects(boxAProjection.y, boxBProjection.y);
+    return (
+      this.lineIntersects(boxAProjection.x, boxBProjection.x) &&
+      this.lineIntersects(boxAProjection.y, boxBProjection.y)
+    );
   };
 
   /**
@@ -287,13 +258,14 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    */
   updateCollidingChildren = (selectionBox: Box) => {
     this.selectedChildren = [];
+
     if (this.props.elements) {
       this.props.elements.forEach((ref, $index) => {
         if (ref) {
           const refBox = ref.getBoundingClientRect();
           const tmpBox = {
-            top: ((refBox.top - this.state.offset.top) + window.scrollY) / this.state.zoom,
-            left: ((refBox.left - this.state.offset.left) + window.scrollX) / this.state.zoom,
+            top: (refBox.top - this.state.offset.top + window.scrollY) / this.state.zoom,
+            left: (refBox.left - this.state.offset.left + window.scrollX) / this.state.zoom,
             width: ref.clientWidth,
             height: ref.clientHeight,
           };
@@ -304,7 +276,11 @@ export default class Selection extends React.PureComponent<Props, State> { // es
         }
       });
     }
-    if (this.props.onHighlightChange && JSON.stringify(this.highlightedChildren) !== JSON.stringify(this.selectedChildren)) {
+
+    if (
+      this.props.onHighlightChange &&
+      JSON.stringify(this.highlightedChildren) !== JSON.stringify(this.selectedChildren)
+    ) {
       const { onHighlightChange } = this.props;
       this.highlightedChildren = [...this.selectedChildren];
       if (window.requestAnimationFrame) {
@@ -321,27 +297,40 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    * Calculate selection box dimensions
    * @private
    */
-  calculateSelectionBox = (startPoint: ?Point, endPoint: ?Point) => {
+  calculateSelectionBox = (startPoint: Point | null, endPoint: Point | null) => {
     if (!this.state.mouseDown || !startPoint || !endPoint) {
       return null;
     }
-    let left, top, width, height = 0;
+
+    let left,
+      top,
+      width,
+      height = 0;
+
+    // The extra 1 pixel is to ensure that the mouse is on top
+    // of the selection box and avoids triggering clicks on the target.
+    const boundingMarginPx = 1;
+
     if (this.props.confineSelectionBox) {
-      var refBox = this.props.target.getBoundingClientRect();
-      // The extra 1 pixel is to ensure that the mouse is on top
-      // of the selection box and avoids triggering clicks on the target.
-      left = Math.max(0, Math.min(startPoint.x, endPoint.x)) - 1;
-      top = Math.max(0, Math.min(startPoint.y, endPoint.y)) - 1;
-      width = (startPoint.x < endPoint.x ? Math.min(refBox.width - startPoint.x, Math.abs(startPoint.x - endPoint.x)) : Math.min(startPoint.x, Math.abs(startPoint.x - endPoint.x))) + 1;
-      height = (startPoint.y < endPoint.y ? Math.min(refBox.height - startPoint.y, Math.abs(startPoint.y - endPoint.y)) : Math.min(startPoint.y, Math.abs(startPoint.y - endPoint.y))) + 1;
+      const refBox = this.props.target.getBoundingClientRect();
+
+      left = Math.max(0, Math.min(startPoint.x, endPoint.x)) - boundingMarginPx;
+      top = Math.max(0, Math.min(startPoint.y, endPoint.y)) - boundingMarginPx;
+      width =
+        (startPoint.x < endPoint.x
+          ? Math.min(refBox.width - startPoint.x, Math.abs(startPoint.x - endPoint.x))
+          : Math.min(startPoint.x, Math.abs(startPoint.x - endPoint.x))) + boundingMarginPx;
+      height =
+        (startPoint.y < endPoint.y
+          ? Math.min(refBox.height - startPoint.y, Math.abs(startPoint.y - endPoint.y))
+          : Math.min(startPoint.y, Math.abs(startPoint.y - endPoint.y))) + boundingMarginPx;
     } else {
-      // The extra 1 pixel is to ensure that the mouse is on top
-      // of the selection box and avoids triggering clicks on the target.
-      left = Math.min(startPoint.x, endPoint.x) - 1;
-      top = Math.min(startPoint.y, endPoint.y) - 1;
-      width = Math.abs(startPoint.x - endPoint.x) + 1;
-      height = Math.abs(startPoint.y - endPoint.y) + 1;
+      left = Math.min(startPoint.x, endPoint.x) - boundingMarginPx;
+      top = Math.min(startPoint.y, endPoint.y) - boundingMarginPx;
+      width = Math.abs(startPoint.x - endPoint.x) + boundingMarginPx;
+      height = Math.abs(startPoint.y - endPoint.y) + boundingMarginPx;
     }
+
     return {
       left,
       top,
@@ -354,7 +343,7 @@ export default class Selection extends React.PureComponent<Props, State> { // es
    * Render
    */
   render() {
-    let style: any = {
+    let style: React.CSSProperties = {
       position: 'absolute',
       background: 'rgba(159, 217, 255, 0.3)',
       border: 'solid 1px rgba(123, 123, 123, 0.61)',
@@ -373,22 +362,6 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     if (!this.state.mouseDown || !this.state.endPoint || !this.state.startPoint) {
       return null;
     }
-    return (
-      <div className='react-ds-border' style={ style } />
-    );
+    return <div className="react-ds-border" style={style} />;
   }
 }
-
-Selection.propTypes = {
-  target: PropTypes.object,
-  confineSelectionBox: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onSelectionChange: PropTypes.func.isRequired,
-  onHighlightChange: PropTypes.func,
-  elements: PropTypes.array.isRequired,
-  // eslint-disable-next-line react/no-unused-prop-types
-  offset: PropTypes.object,
-  zoom: PropTypes.number,
-  style: PropTypes.object,
-  ignoreTargets: PropTypes.array,
-};
